@@ -1,57 +1,30 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 #include <cmath>
 using namespace std;
-#define Min(a,b) ((a)<(b)?(a):(b))
 
-double mini;
-vector<bool> CHK(20);
-
-double Vec_sum(vector<vector<int> >&VEC,int n)
+double Vec_sum(vector<vector<int> >&VEC,int n, int idx, int half, int x_sum,int y_sum)
 {
-    int x=0,y=0;
+    if(idx == n) return sqrt(pow(x_sum,2)+pow(y_sum,2));
 
-    for(int i=0;i<n;i++)
+    double mini=10000000;
+    if(n-idx-1 >= half)
     {
-        if(CHK[i])
-        {
-            x-=VEC[i][0];
-            y-=VEC[i][1];
-        }
-        else
-        {
-            x+=VEC[i][0];
-            y+=VEC[i][1];
-        }
+        mini = min(mini, Vec_sum(VEC,n,idx+1,half, x_sum+VEC[idx][0], y_sum+VEC[idx][1]));
+    }
+    if(half)
+    {
+        mini = min(mini, Vec_sum(VEC,n,idx+1,half-1, x_sum-VEC[idx][0], y_sum-VEC[idx][1]));
     }
 
-    return sqrt(pow(x,2)+pow(y,2));
-}
-
-void Search(vector<vector<int> >&VEC,int n, int idx, int half)
-{
-    if(n-idx < half) return;
-    if(half == 0) 
-    {
-        mini = min(mini, Vec_sum(VEC,n));
-        return;
-    }
-    for(int i=idx; i<n;i++)
-    {
-        CHK[i] = 1;
-        Search(VEC,n,i+1,half-1);
-        CHK[i] = 0;
-    }
+    return mini;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    cout<<fixed;
-    cout.precision(7);
+    cout.precision(15);
 
     int t;
     vector<vector<int> > VEC(20,vector<int>(2));
@@ -60,11 +33,10 @@ int main()
     while(t--)
     {
         int n;
-        mini = 10000000;
         cin>>n;
-        for(int i=0;i<n;i++) cin>>VEC[i][0]>>VEC[i][1];
 
-        Search(VEC,n,0,n/2);
-        cout<<mini<<'\n';
+        for(int i=0;i<n;i++) cin>>VEC[i][0]>>VEC[i][1];
+        cout<<Vec_sum(VEC,n,0,n/2,0,0)<<'\n';
+
     }
 }
