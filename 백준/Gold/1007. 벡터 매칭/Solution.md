@@ -8,7 +8,7 @@ v1 + v2
 + vector를 함수로 넘길 때
 double Vec_sum(vector<vector<int> >VEC,int n)
 
-call by value로 넘기면 시간이 추가로 더 걸려 TLE가 난다.
+call by value로 넘기면 시간이 추가로 더 걸려 TLE가 난다.   
 따라서 call by reference로 넘겨야 한다. 배열 이름 앞에 "&" 추가
 
 double Vec_sum(vector<vector<int> >&VEC,int n)
