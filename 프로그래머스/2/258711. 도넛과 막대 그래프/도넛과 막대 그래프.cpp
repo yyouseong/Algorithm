@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
-
-using namespace std;
 #define MaxN 1000001
-//ios_base::sync_with_stdio(false);
+using namespace std;
 
 int Find(vector<vector<int> > &Graph, int cur)
 {
@@ -24,8 +22,8 @@ int Find(vector<vector<int> > &Graph, int cur)
 
 vector<int> solution(vector<vector<int>> edges)
 {
-    vector<int> answer(4,0), Ans(4,0);
-    vector<int> ChkY(MaxN,0);
+    vector<int> answer(4,0);
+    vector<bool> ChkY(MaxN,0);
     vector<vector<int> > Graph(MaxN,vector<int>());
     int node_one = 0;
     
@@ -39,11 +37,10 @@ vector<int> solution(vector<vector<int>> edges)
     
     for(int i=0;i<MaxN;i++) 
         if(Graph[i].size()>Graph[node_one].size() && ChkY[i] == 0) node_one = i;
+    answer[0] = node_one;
     
-    Ans[0] = node_one;
     for(int j=0;j<Graph[node_one].size();j++)
-        Ans[Find(Graph, Graph[node_one][j])]++;
-    
-    if(answer[1]+answer[2]+answer[3] < Ans[1]+Ans[2]+Ans[3]) for(int k=0;k<4;k++) answer[k] = Ans[k];
+        answer[Find(Graph, Graph[node_one][j])]++;
+
     return answer;
 }
