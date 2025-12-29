@@ -3,7 +3,7 @@
 using namespace std;
 
 int n, cnt;
-vector<bool> x(20), y(20), a(40), b(40);
+vector<char> y(20), a(40), b(40);
 void f(int i)
 {
     if (i == n)
@@ -12,11 +12,11 @@ void f(int i)
     {
         for (int j = 0; j < n; j++)
         {
-            if (y[j] == false && a[n - i + j] == false && b[i + j] == false)
+            if (y[j] == 0 && a[n - i + j] == 0 && b[i + j] == 0)
             {
-                y[j] = a[n - i + j] = b[i + j] = true;
+                y[j] = a[n - i + j] = b[i + j] = 1;
                 f(i + 1);
-                y[j] = a[n - i + j] = b[i + j] = false;
+                y[j] = a[n - i + j] = b[i + j] = 0;
             }
         }
     }
